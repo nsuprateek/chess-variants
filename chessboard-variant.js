@@ -4,6 +4,27 @@ var $status = $('#status')
 var $fen = $('#fen')
 var $pgn = $('#pgn')
 
+// ---------------- SELECT PROMOTION -----------------------------------
+var promotion = null;
+$('#queen').on('click', () => {
+  console.log("queen");
+  promotion = 'q';
+})
+$('#rook').on('click', () => {
+  console.log("rook");
+  promotion = 'r';
+})
+$('#bishop').on('click', () => {
+  console.log("bishop");
+  promotion = 'b';
+})
+
+$('#knight').on('click', () => {
+  console.log("knight");
+  promotion = 'n';
+})
+// --------------------------------------------------------------------
+
 function onDragStart (source, piece, position, orientation) {
   // do not pick up pieces if the game is over
   if (game.game_over()) return false
@@ -20,9 +41,10 @@ function onDrop (source, target) {
   var move = game.move({
     from: source,
     to: target,
-    promotion: 'q' // NOTE: always promote to a queen for example simplicity
+    promotion: window.promotion // NOTE: always promote to a queen for example simplicity
   })
 
+  // move.promotion = window.prom
   // illegal move
   if (move === null) return 'snapback'
 
